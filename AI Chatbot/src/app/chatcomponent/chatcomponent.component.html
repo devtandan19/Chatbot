@@ -1,0 +1,67 @@
+<div class="chat-bar-collapsible">
+    <div id="helpdesk-popup-button">
+        <img id="popupbtn" [src]="chatimage" alt="missing" (click)="openSupportPopup()" [style.display]="isopenbtn ? 'block' : 'none'" >
+    </div>
+
+    <div class="content" [style.display]="isopen ? 'block' : 'none'">
+
+        <div  class="collapsible">
+            <p id="title">
+                <img [src]="chatgirl" id="chatbox__image--header" alt="image">
+                <span>Chat with Emanec...</span> 
+            </p>
+            <i id="chatbox-close-button"(click)="openSupportPopup()" class="fa fa-fw fa-close"></i> 
+        </div>
+        
+        <div class="full-chat-block">
+            <!-- message container -->
+            <div class="outer-container" >
+                <!-- messages -->
+                <div id="chatbox">
+                    <mat-selection-list [multiple]="false" [style.display]="show ? 'block' : 'none'">
+                        <mat-divider></mat-divider>
+                        <mat-list *ngFor="let message of messages" (click)="showchat()" >
+                            <p mat-line class="chat-title">
+                                <img matListAvatar [src]="chatgirl" alt="notfound">
+                                <span class="chat-name">
+                                    {{"Namina"}}
+                                </span>
+                                <!-- <span class="chat-date">
+                                    {{"02-12-1209"}}
+                                </span> -->
+                            </p>
+                            <p mat-line>
+                                {{"dvsad savdhga sajhdg"}}
+                            </p>
+
+                        </mat-list>
+                        <mat-divider></mat-divider>
+                    </mat-selection-list>
+                    <div class="messages" #scrollMe  [scrollTop]="scrollMe.scrollHeight" [style.display]="show ? 'none' : 'block'">
+                        <h5 id="chat-timestamp">{{today|date:'h:mm a'}}</h5>
+                        <ng-container *ngFor="let message of messages">
+                            <div class="chat-item"
+                                    [ngClass]="{'right' : message.type == 'user', 'left': message.type == 'client'}">
+                                <img id="avatar" [src]="message.image">
+                                <p id="message-body">{{message.message}}</p>
+                            </div>
+                        </ng-container>
+                        <button #btn1 class="questions" (click)="addquestion(btn1.innerText)" [style.display]="isbtnclicked ? 'none' : 'block'">what is emanec?</button>
+                        <button #btn2 class="questions" (click)="addquestion(btn2.innerText)" [style.display]="isbtnclicked ? 'none' : 'block'" >Who is authorized to purchase through emanec?</button>
+                        <button #btn3 class="questions" (click)="addquestion(btn3.innerText)" [style.display]="isbtnclicked ? 'none' : 'block'" >What is my supply order status?</button>
+
+                        <div *ngIf="loading" class="message" style="width: 100%; display: block;">
+                            <div [class]="'client'">...</div>
+
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <form id="helpdesk-popup-footer" [formGroup]="chatForm" class="chat-bar-input-block">          
+            <input id="textInput" class="input-box" type="text" formControlName="message"  placeholder="Tap 'Enter' to send the message" (keyup.enter)="sendMessage()">
+            <i id="chat-icon" style="color:#333;" (click)="sendMessage()" class="fa fa-fw fa-send"></i>
+        </form>  
+    </div>
+</div> 
